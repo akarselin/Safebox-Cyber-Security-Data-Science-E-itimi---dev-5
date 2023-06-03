@@ -1,0 +1,17 @@
+CASE 3
+from flask import Flask, jsonify, request
+from pymongo import MongoClient
+
+app = Flask(__name__)
+
+# MongoDB bağlantısı oluşturma
+client = MongoClient("<connection_string>")
+db = client.flaskmongodb
+collection = db.Users
+
+# Endpoint - Users Collection'a kullanıcı ekleme
+@app.route('/adduser', methods=['POST'])
+def add_user():
+    user = request.get_json()
+    collection.insert_one(user)
+    return jsonify
