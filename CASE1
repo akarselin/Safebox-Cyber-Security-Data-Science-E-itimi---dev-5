@@ -1,0 +1,24 @@
+#CASE1
+from pymongo import MongoClient
+import random
+
+# MongoDB bağlantısı oluşturma
+client = MongoClient("<connection_string>")
+db = client.flaskmongodb
+collection = db.Users
+
+# 50 adet rastgele veri eklenmesi
+for i in range(50):
+    name = "User" + str(i)
+    age = random.randint(0, 50)
+    job = "Job" + str(i)
+    description = 1
+
+    user_data = {
+        "Name": name,
+        "Age": age,
+        "Job": job,
+        "Description": description
+    }
+
+    collection.insert_one(user_data)
