@@ -1,0 +1,39 @@
+#CASE2
+from pymongo import MongoClient
+
+# MongoDB bağlantısı oluşturma
+client = MongoClient("<connection_string>")
+db = client.flaskmongodb
+collection = db.Users
+
+# Users collectionındaki tüm verilerin getirilmesi
+def get_all_users():
+    users = collection.find()
+    for user in users:
+        print(user)
+
+# Belirli bir isme sahip kişilerin getirilmesi
+def get_users_by_name(name):
+    query = {"Name": name}
+    users = collection.find(query)
+    for user in users:
+        print(user)
+
+# Yaşı 20'den fazla olan kişilerin getirilmesi
+def get_users_above_age(age):
+    query = {"Age": {"$gt": age}}
+    users = collection.find(query)
+    for user in users:
+        print(user)
+
+# Yaşı 25'ten fazla ve description'ı 0 olan kişilerin getirilmesi
+def get_users_above_age_with_description(age, description):
+    query = {"$and": [{"Age": {"$gt": age}}, {"Description": description}]}
+    users = collection.find(query)
+    for user in users:
+        print(user)
+
+# Yaşı 45-48 arasında olan kişilerin silinmesi
+def delete_users_between_age(min_age, max_age):
+    query = {"Age": {"$gte": min_age, "$lte": max_age}}
+    collection.delete_many(query)
